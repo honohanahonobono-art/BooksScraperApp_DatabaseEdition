@@ -2,20 +2,22 @@ import sqlite3
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
-#日本語フォント設定
-import matplotlib.pyplot as plt
-from matplotlib import font_manager,rcParams
 
+
+#日本語フォント設定
 from pathlib import Path
 from matplotlib import font_manager, rcParams
 
 FONT_PATH = Path(__file__).parent / "fonts" / "NotoSansCJKjp-VF.otf"
 
 if FONT_PATH.exists():
+    font_manager.fontManager.addfont(str(FONT_PATH))  # ★これが効く
     font_prop = font_manager.FontProperties(fname=str(FONT_PATH))
     rcParams["font.family"] = font_prop.get_name()
 else:
-    rcParams["font.family"] = "DejaVu Sans"  # 最後の保険
+    rcParams["font.family"] = "DejaVu Sans"
+
+
     
 
 # Streamlitアプリの設定
