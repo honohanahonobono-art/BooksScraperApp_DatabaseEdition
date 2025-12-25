@@ -6,7 +6,17 @@ import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt
 from matplotlib import font_manager,rcParams
 
-font_path="/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc"
+from pathlib import Path
+from matplotlib import font_manager, rcParams
+
+FONT_PATH = Path(__file__).parent / "fonts" / "NotoSansCJKjp-Regular.otf"
+
+if FONT_PATH.exists():
+    font_prop = font_manager.FontProperties(fname=str(FONT_PATH))
+    rcParams["font.family"] = font_prop.get_name()
+else:
+    rcParams["font.family"] = "DejaVu Sans"  # 最後の保険
+    
 font_prop=font_manager.FontProperties(fname=font_path)
 rcParams["font.family"]=font_prop.get_name()
 # Streamlitアプリの設定
