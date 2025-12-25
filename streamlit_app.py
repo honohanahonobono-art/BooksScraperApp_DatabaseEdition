@@ -8,14 +8,16 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from matplotlib import font_manager, rcParams
 
-FONT_PATH = Path(__file__).parent / "fonts" / "NotoSansCJKjp-VF.otf"
+FONT_PATH = Path(__file__).parent / "fonts" / "NotoSansJP-Regular.ttf"
 
+# まず落ちないデフォルト
+rcParams["font.family"] = "DejaVu Sans"
+
+# フォントがあれば、それを“直接使う”設定にする（登録しない）
 if FONT_PATH.exists():
-    font_manager.fontManager.addfont(str(FONT_PATH))  # ★これが効く
-    font_prop = font_manager.FontProperties(fname=str(FONT_PATH))
-    rcParams["font.family"] = font_prop.get_name()
+    jp_font = font_manager.FontProperties(fname=str(FONT_PATH))
 else:
-    rcParams["font.family"] = "DejaVu Sans"
+    jp_font = None
 
 
     
@@ -132,9 +134,9 @@ df_plot=df_top5.sort_values("rating")
 fig,ax=plt.subplots(figsize=(8,4))
 ax.barh(df_plot["title"],df_plot["rating"])
 
-ax.set_xlabel("Rating (★マーク)")
-ax.set_ylabel("タイトル")
-ax.set_title("人気ランキングTOP5")
+ax.set_xlabel("Rating (★マーク)",fontproperties=jp_font)
+ax.set_ylabel("タイトル",fontproperties=jp_font)
+ax.set_title("人気ランキングTOP5",fontproperties=jp_font)
 
 st.pyplot(fig)
 
