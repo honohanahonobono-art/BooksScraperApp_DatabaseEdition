@@ -9,7 +9,7 @@ from matplotlib import font_manager,rcParams
 from pathlib import Path
 from matplotlib import font_manager, rcParams
 
-FONT_PATH = Path(__file__).parent / "fonts" / "NotoSansCJKjp-Regular.otf"
+FONT_PATH = Path(__file__).parent / "fonts" / "NotoSansCJKjp-VF.otf"
 
 if FONT_PATH.exists():
     font_prop = font_manager.FontProperties(fname=str(FONT_PATH))
