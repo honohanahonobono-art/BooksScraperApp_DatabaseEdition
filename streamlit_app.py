@@ -17,8 +17,7 @@ if FONT_PATH.exists():
 else:
     rcParams["font.family"] = "DejaVu Sans"  # 最後の保険
     
-font_prop=font_manager.FontProperties(fname=font_path)
-rcParams["font.family"]=font_prop.get_name()
+
 # Streamlitアプリの設定
 st.set_page_config(page_title="Book App",layout="wide")
 
