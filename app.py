@@ -73,7 +73,7 @@ def get_data_book_ec():
                 except requests.exceptions.RequestException as e :
                     print(f"△詳細ページ取得失敗：{one_link}/{e}")            
                 
-        
+    
           
 
             

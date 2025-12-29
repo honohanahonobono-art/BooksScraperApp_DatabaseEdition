@@ -1,5 +1,9 @@
 import sqlite3
 import pandas as pd
+from db_setup import init_db
+
+init_db()
+
 
 DB_PATH="books.db"
 
