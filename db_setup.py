@@ -1,25 +1,36 @@
 import sqlite3
+from pathlib import Path
 
-# ① books.db というデータベースファイルに接続
-conn = sqlite3.connect("books.db")
+#DBファイルのパス設定
+DB_PATH = Path(__file__).resolve().parent / "books.db"
 
-# ② SQLを実行するためのカーソルを取得
-cur = conn.cursor()
+def init_db():
+    """データベースの初期化を行う関数"""
+    # ① books.db というデータベースファイルに接続
+    conn = sqlite3.connect(DB_PATH)
 
-# ③ books というテーブルを作成
-cur.execute("""
-CREATE TABLE IF NOT EXISTS books (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    price REAL,
-    link TEXT,
-    stock INTEGER,
-    rating INTEGER
-);
-""")
+    # ② SQLを実行するためのカーソルを取得
+    cur = conn.cursor()
 
-# ④ 変更を保存
-conn.commit()
+    # ③ books というテーブルを作成
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS books (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        price REAL,
+        link TEXT,
+        stock INTEGER,
+        rating INTEGER
+    );
+    """)
+
+    # ④ 変更を保存
+    conn.commit()
+
+    # ⑤ 接続を閉じる
+    conn.close()
+
+
 
 
 # テスト用の1件
@@ -34,13 +45,10 @@ conn.commit()
 #    4
 #))
 
-conn.commit()
+#conn.commit()
 
 
 
 
 
 
-
-# ⑤ 接続を閉じる
-conn.close()

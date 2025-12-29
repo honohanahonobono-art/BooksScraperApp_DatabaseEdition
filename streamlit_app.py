@@ -2,6 +2,9 @@ import sqlite3
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+from db_setup import init_db
+
+init_db()
 
 
 #日本語フォント設定
@@ -10,7 +13,7 @@ from matplotlib import font_manager, rcParams
 
 FONT_PATH = Path(__file__).parent / "fonts" / "NotoSansJP-Regular.ttf"
 
-# まず落ちないデフォルト
+# デフォルト
 rcParams["font.family"] = "DejaVu Sans"
 
 # フォントがあれば、それを“直接使う”設定にする（登録しない）
@@ -25,7 +28,7 @@ else:
 # Streamlitアプリの設定
 st.set_page_config(page_title="Book App",layout="wide")
 
-st.title("📚　在庫確認ページ　📚")
+st.title("📚　Books to Scrape We  管理システム　📚")
 
 #サイドバー設定
 
@@ -64,95 +67,24 @@ with st.expander(f"🔺在庫アラート({alert_count}件)を表示",expanded=F
                         hide_index=True,
                         use_container_width=True
                     )
+# 表紙ページへのリンクボタン
+st.set_page_config(page_title="Book App", layout="wide")
+st.title("⚙️　各機能　⚙️")
 
-# 在庫検索　
+col1, col2, col3 = st.columns(3)
 
-from stock_search import search_books
-st.subheader("🔍　在庫検索　🔍")
+with col1:
+    if st.button("📦 在庫確認ページへ", use_container_width=True):
+        st.switch_page("pages/1_stock.py")
 
-with st.form("search_form"):
-    col1,col2,col3=st.columns([2,2,1])
-    with col1:
-        keyword=st.text_input("キーワード検索（タイトルに含む）",value="")
-    with col2:
-        min_stock_raw=st.text_input("最低在庫数絞込（未入力OK）",value="")
-    with col3:
-        submitted=st.form_submit_button("検索")
-    min_stock=None
-    input_error=False
-    if min_stock_raw.strip():
-        try:
-            min_stock_val=int(min_stock_raw)
-            if min_stock_val<0:
-                st.warning("最低在庫数は0以上で入力してください")
-                input_error=True
-            else:
-                min_stock=min_stock_val
-        except ValueError:
-            st.error("最低在庫数は数字で入力してください")
-            input_error=True
-
-if submitted and not input_error:
-    df_search=search_books(keyword,min_stock,stock_only)
-    st.caption(f"検索結果：{len(df_search)}件")
-    st.data_editor(
-        df_search,
-        column_config={"link":st.column_config.LinkColumn("詳細ページ",display_text="詳細ページ")},
-        hide_index=True,
-        use_container_width=True
-    )
-elif not submitted:
-    st.info("検索条件を入力して「検索」を押してください")
+with col2:
+    if st.button("⭐ 自社人気ランキングへ", use_container_width=True):
+        st.switch_page("pages/2_rank.py")
+with col3:
+    if st.button("📊 仕入参考へ", use_container_width=True):
+        st.switch_page("pages/3_purchase.py")
 
 
 
-# ここにDBからデータを取得して表示する処理を追加
-DB_PATH="books.db"
-
-def load_top5(stock_only:bool):
-    conn=sqlite3.connect(DB_PATH)
-    where="WHERE stock>0" if stock_only else ""
-    query=f"""
-    SELECT title,price,link,stock,rating
-    FROM books
-    {where}
-    ORDER BY rating DESC,STOCK DESC,price ASC
-    LIMIT 5
-    """
-    df=pd.read_sql_query(query,conn)
-    conn.close()
-    return df
-
-df_top5=load_top5(stock_only)
-
-
-st.subheader("⭐️人気ランキングTOP5")
-#st.bar_chart(df_top5.set_index("title")["rating"])
-#横棒グラフに変更
-df_plot=df_top5.sort_values("rating")
-
-fig,ax=plt.subplots(figsize=(8,4))
-ax.barh(df_plot["title"],df_plot["rating"])
-
-ax.set_xlabel("Rating (★マーク)",fontproperties=jp_font)
-ax.set_ylabel("タイトル",fontproperties=jp_font)
-ax.set_title("人気ランキングTOP5",fontproperties=jp_font)
-
-st.pyplot(fig)
-
-
-# データフレームを表示
-st.subheader("⭐️人気ランキングTOP5（詳細）在庫あり" if stock_only else "⭐️人気ランキングTOP5（詳細）全て")
-#詳細リンクをクリック可能にする
-#df_top5["link"]=df_top5["link"].apply(lambda x:f"[詳細ページ]({x})")
-#st.dataframe(df_top5,use_container_width=True)
-st.data_editor(
-    df_top5,
-    column_config={"link":st.column_config.LinkColumn("詳細ページ",display_text="詳細ページ")},
-    hide_index=True,
-    use_container_width=True
-    
-    
-)
 
 
