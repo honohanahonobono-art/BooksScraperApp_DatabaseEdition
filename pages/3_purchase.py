@@ -2,6 +2,7 @@ import sqlite3
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+import requests
 
 #日本語フォント設定
 from pathlib import Path
@@ -126,10 +127,8 @@ import math
 # googlebooks.py の r.raise_for_status() の直前に追加
 import streamlit as st
 
-st.write("API_KEY exists:", bool(api_key))
-st.write("status:", r.status_code)
-st.write("url:", r.url.replace(api_key, "****") if api_key else r.url)
-st.write("body head:", r.text[:300])
+st.write("API_KEY exists:", bool(API_KEY))
+
 
 
 
