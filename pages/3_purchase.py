@@ -142,7 +142,6 @@ selected_cat = st.selectbox(
 
 
 
-dfb = fetch_google_books_top10(selected_cat, API_KEY)
 
 #直近1年に絞る
 one_year_ago=datetime.now()-timedelta(days=365)
