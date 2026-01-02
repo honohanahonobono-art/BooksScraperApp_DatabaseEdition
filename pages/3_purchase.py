@@ -55,9 +55,6 @@ st.subheader(f"📚 評価の高いカテゴリTOP{top_n} 📚")
 
 
 
-
-
-
 #データ準備
 categories = df_view["category_name"]
 scores = df_view["score"]
@@ -139,34 +136,6 @@ selected_cat = st.selectbox(
     df["category_name"].tolist()
 )
 
-import sqlite3
-import pandas as pd
-import streamlit as st
-import matplotlib.pyplot as plt
-import requests
-
-#日本語フォント設定
-from pathlib import Path
-from matplotlib import font_manager, rcParams
-
-FONT_PATH = Path(__file__).parent / "fonts" / "NotoSansJP-Regular.ttf"
-
-# デフォルト
-rcParams["font.family"] = "DejaVu Sans"
-
-# フォントがあれば、それを“直接使う”設定にする（登録しない）
-if FONT_PATH.exists():
-    jp_font = font_manager.FontProperties(fname=str(FONT_PATH))
-else:
-    jp_font = None
-    
-import streamlit as st
-
-with st.sidebar:
-    st.header("⚙️ 表示設定")
-    stock_only = st.checkbox("📦 在庫ありのみ表示", value=True, key="stock_only_purchase")
-
-    
 
 # Streamlitアプリの設定 
 from db_setup import init_db
@@ -280,31 +249,6 @@ selected_cat = st.selectbox(
     "カテゴリを選択",
     df["category_name"].tolist()
 )
-
-
-
-
-
-#直近1年に絞る
-one_year_ago=datetime.now()-timedelta(days=365)
-df_recent=dfb.dropna(subset=["published_dt"]).copy()
-df_recent=df_recent[df_recent["published_dt"]>= one_year_ago]
-base = df_recent if len(df_recent) >= 5 else dfb
-
-base = base.sort_values(["pop_score", "ratingsCount"], ascending=False).head(10)
-
-gb_top10 = fetch_google_books_top10(selected_cat, API_KEY, lang="ja", max_results=40)
-
-st.data_editor(base,
-    column_config={
-        "infoLink": st.column_config.LinkColumn(
-            "リンク",
-            display_text="開く"
-        )
-    },
-    hide_index=True,
-    width="stretch")
-
 
 
 
