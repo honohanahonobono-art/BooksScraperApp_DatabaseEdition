@@ -62,7 +62,7 @@ fig,ax1=plt.subplots(figsize=(10,5))
 
 # 棒グラフ（スコア）
 ax1.bar(categories,scores,alpha=0.7)
-ax1.set_ylabel("仕入スコア（優先度）"
+ax1.set_ylabel("仕入スコア（優先度）")
 ax1.set_xlabel("カテゴリ")
 ax1.tick_params(axis='x', rotation=45)
 
