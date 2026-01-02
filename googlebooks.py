@@ -57,10 +57,13 @@ def fetch_google_books_top10(subject, api_key=None, lang="ja", max_results=40):
 
     
     data=r.json()
+    items = data.get("items")
+    if not items:
+        return pd.DataFrame()
 
 #データの整理
     rows=[]
-    for item in data.get("items",[]):
+    for item in items :
         info=item.get("volumeInfo",{})
         rating=None
         count=0

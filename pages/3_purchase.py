@@ -140,6 +140,10 @@ if dfb is None or dfb.empty:
     st.warning("Google Books データが取得できませんでした")
     st.stop()
 
+if dfb is None or dfb.empty:
+    st.warning("Google Books データが取得できませんでした")
+    st.stop()
+
 
 #直近1年に絞る
 one_year_ago=datetime.now()-timedelta(days=365)
