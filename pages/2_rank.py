@@ -10,14 +10,12 @@ from matplotlib import font_manager, rcParams
 
 FONT_PATH = Path(__file__).parent / "fonts" / "NotoSansJP-Regular.ttf"
 
-# デフォルト
-rcParams["font.family"] = "DejaVu Sans"
-
-# フォントがあれば、それを“直接使う”設定にする（登録しない）
 if FONT_PATH.exists():
-    jp_font = font_manager.FontProperties(fname=str(FONT_PATH))
+    font_manager.fontManager.addfont(str(FONT_PATH))
+    rcParams["font.family"] = "Noto Sans JP"   
 else:
-    jp_font = None
+    rcParams["font.family"] = "DejaVu Sans"
+
     
 
 import streamlit as st
