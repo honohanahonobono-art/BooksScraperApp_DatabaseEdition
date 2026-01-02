@@ -39,13 +39,13 @@ def fetch_google_books_top10(subject, api_key=None, lang="ja", max_results=40):
 
     r=requests.get(url,params=params,timeout=20)
     safe_url = r.url
-if api_key:
-    safe_url = safe_url.replace(api_key, "****")
+    if api_key:
+        safe_url = safe_url.replace(api_key, "****")
     
-    # ★ここで必ず見える化（redacted回避）
-    st.caption(f"Google Books status: {r.status_code}")
-    st.caption(r.url.replace(api_key, "****"))
-    st.caption(r.text[:200])
+     # ★ここで必ず見える化（redacted回避）
+        st.caption(f"Google Books status: {r.status_code}")
+        st.caption(r.url.replace(api_key, "****"))
+        st.caption(r.text[:200])
 
      # ★200以外なら落とさず空で返す
     if r.status_code != 200:
