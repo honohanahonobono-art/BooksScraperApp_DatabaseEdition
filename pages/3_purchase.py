@@ -3,7 +3,6 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 
-
 #日本語フォント設定
 from pathlib import Path
 from matplotlib import font_manager, rcParams
@@ -105,4 +104,55 @@ st.data_editor(
 
 
 
+
+
+
+
+import os
+from dotenv import load_dotenv
+import streamlit as st
+
+# API_KEY 定義 
+load_dotenv()
+API_KEY = os.getenv("GOOGLE_BOOKS_API_KEY") or st.secrets.get("GOOGLE_BOOKS_API_KEY")
+
+
+
+
+from googlebooks import fetch_google_books_top10
+from datetime import datetime, timedelta
+import math
+
+
+st.subheader("📚 Google Books 人気本（直近1年）")
+
+selected_cat = st.selectbox(
+    "カテゴリを選択",
+    df["category_name"].tolist()
+)
+
+
+
+
+dfb = fetch_google_books_top10(selected_cat, API_KEY)
+
+#直近1年に絞る
+one_year_ago=datetime.now()-timedelta(days=365)
+df_recent=dfb.dropna(subset=["published_dt"]).copy()
+df_recent=df_recent[df_recent["published_dt"]>= one_year_ago]
+base = df_recent if len(df_recent) >= 5 else dfb
+
+base = base.sort_values(["pop_score", "ratingsCount"], ascending=False).head(10)
+
+gb_top10 = fetch_google_books_top10(selected_cat, API_KEY, lang="ja", max_results=40)
+
+st.data_editor(base,
+    column_config={
+        "infoLink": st.column_config.LinkColumn(
+            "リンク",
+            display_text="開く"
+        )
+    },
+    hide_index=True,
+    use_container_width=True)
 
