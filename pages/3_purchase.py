@@ -164,8 +164,8 @@ import streamlit as st
 
 with st.sidebar:
     st.header("⚙️ 表示設定")
-    stock_only = st.checkbox("📦 在庫ありのみ表示", key="stock_only_purchase")
-)
+    stock_only = st.checkbox("📦 在庫ありのみ表示", value=True, key="stock_only_purchase")
+
     
 
 # Streamlitアプリの設定 
