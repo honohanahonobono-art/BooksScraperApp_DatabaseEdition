@@ -61,18 +61,18 @@ fig,ax1=plt.subplots(figsize=(10,5))
 
 # 棒グラフ（スコア）
 ax1.bar(categories,scores,alpha=0.7)
-ax1.set_ylabel("仕入スコア（優先度）",fontproperties=jp_font)
-ax1.set_xlabel("カテゴリ",fontproperties=jp_font)
+ax1.set_ylabel("仕入スコア（優先度）"
+ax1.set_xlabel("カテゴリ")
 ax1.tick_params(axis='x', rotation=45)
 
 
 #折れ線グラフ（平均評価）
 ax2=ax1.twinx()
 ax2.plot(categories,avg_ratings,color="orange",marker="o",linestyle="--")
-ax2.set_ylabel("平均評価（⭐️）",fontproperties=jp_font)
+ax2.set_ylabel("平均評価（⭐️）")
 ax2.set_ylim(0,5)
 
-ax1.set_title(f"仕入参考指標　TOP{top_n}",fontproperties=jp_font)
+ax1.set_title(f"仕入参考指標　TOP{top_n}")
 
 plt.tight_layout()
 st.pyplot(fig)

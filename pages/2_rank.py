@@ -54,9 +54,9 @@ df_plot=df_top5.sort_values("rating")
 fig,ax=plt.subplots(figsize=(8,4))
 ax.barh(df_plot["title"],df_plot["rating"])
 
-ax.set_xlabel("Rating (★マーク)",fontproperties=jp_font)
-ax.set_ylabel("タイトル",fontproperties=jp_font)
-ax.set_title("人気ランキングTOP5",fontproperties=jp_font)
+ax.set_xlabel("Rating (★マーク)")
+ax.set_ylabel("タイトル")
+ax.set_title("人気ランキングTOP5")
 
 st.pyplot(fig)
 
