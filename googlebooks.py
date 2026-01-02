@@ -43,8 +43,8 @@ def fetch_google_books_top10(subject, api_key=None, lang="ja", max_results=40):
      # ★200以外なら落とさず空で返す
     if r.status_code != 200:
         safe_url = r.url
-    if api_key:
-        safe_url = safe_url.replace(api_key, "****")
+        if api_key:
+            safe_url = safe_url.replace(api_key, "****")
     
      # ★ここで必ず見える化（redacted回避）
 
