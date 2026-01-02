@@ -8,7 +8,8 @@ import requests
 from pathlib import Path
 from matplotlib import font_manager, rcParams
 
-FONT_PATH = Path(__file__).parent / "fonts" / "NotoSansJP-Regular.ttf"
+BASE_DIR = Path(__file__).resolve().parents[1]  
+FONT_PATH = BASE_DIR / "fonts" / "NotoSansJP-Regular.ttf"
 
 if FONT_PATH.exists():
     font_manager.fontManager.addfont(str(FONT_PATH))
