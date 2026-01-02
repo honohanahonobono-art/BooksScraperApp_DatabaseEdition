@@ -31,7 +31,8 @@ def fetch_google_books_top10(subject, api_key=None, lang="ja", max_results=40):
         "q":f"subject:{subject}",
         "langRestrict": lang,
         "orderBy":"relevance",
-        "maxResults":min(max_results,40)
+        "maxResults":min(max_results,40),
+        "country":"JP"
     }
 
     if api_key:
