@@ -51,6 +51,7 @@ top_n=st.slider("上位カテゴリ数設定",5,20,10,step=5,key="purchase_top_n
 df_view=df.head(top_n)
 
 st.subheader(f"📚 評価の高いカテゴリTOP{top_n} 📚")
+st.caption("仕入スコア = 平均評価 × log(1 + 書籍数)")
 
 
 
